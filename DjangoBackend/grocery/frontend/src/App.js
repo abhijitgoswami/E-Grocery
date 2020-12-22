@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import Header from './components/headerComponent.jsx';
 import Footer from './components/footerComponent.jsx';
 import VendorList from './components/vendor/vendorList.jsx';
@@ -13,9 +13,9 @@ class App extends Component {
   render() { 
     return (  
       <Provider store={store}>
-        <BrowserRouter>
+        <HashRouter>
           <Main/>
-        </BrowserRouter>
+        </HashRouter>
       </Provider>
     );
   }

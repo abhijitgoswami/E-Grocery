@@ -28,7 +28,7 @@ const VendorProfile = (props) => {
             <div className="container">
                 <div className="row">
                     <Card>
-                        <CardImg src={require("../Images/demoUser.jpg")} alt="profile"/>
+                        <CardImg src={'../static/images/demoUser.jpg'} alt="profile"/>
                     </Card>
                     
                     <Card>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Card, CardTitle, CardBody, CardDeck, Button, Row} from 'reactstrap';
 import {NavLink} from 'react-router-dom';
 import { LocalForm, Control } from 'react-redux-form';
+import Login from './customer/loginComponent.jsx';
 
 class Home extends Component {
     constructor(props){
@@ -26,9 +27,7 @@ class Home extends Component {
                             
                                 <div id="log-reg">
                                     <div className="float-left">
-                                    <Button color="primary"  className="ml-2">
-                                        <NavLink style={{color:"white", textDecoration:"none"}} to="/register">Login</NavLink>
-                                    </Button>
+                                        <Login/>
                                     </div>
                                     <div className="float-left">
                                     <Button color="primary"  className="ml-2">

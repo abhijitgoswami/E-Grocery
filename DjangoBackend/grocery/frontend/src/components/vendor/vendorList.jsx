@@ -1,26 +1,9 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { connect } from 'react-redux'
-import { fetchVendors } from '../../redux/actionCreator'
 
-const mapStateToProps = (state) => {
-    return{
-        vendors: state.vendors,
-    }
-}
-
-const mapDispatchToProps = (dispatch) => ({
-    fetchVendors: () => dispatch(fetchVendors())
-})
-
-class VendorList extends Component{
-    componentDidMount(){
-        this.props.fetchVendors()
-    }
-
-    render(){
-        const vendors = this.props.vendors.vendors.map(vendor => {
+function VendorList(props){
+  
+        const vendors = props.vendors.map(vendor => {
             console.log(vendor);
             return(
                 <Row key={vendor.id}>
@@ -42,8 +25,8 @@ class VendorList extends Component{
                 {vendors}
             </div>
         );
-    }
+    
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(VendorList);
+export default VendorList;
 

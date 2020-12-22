@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {Button, Label, Col, Row} from 'reactstrap';
 import { Control, Errors, LocalForm } from 'react-redux-form';
-import '../styles/register.css';
-import Login from './loginComponent';
+import Login from './loginComponent.jsx';
 
 const required = (val) => val && val.length;
 // const maxLength = (len) => (val) => !(val) || (val.length <= len);

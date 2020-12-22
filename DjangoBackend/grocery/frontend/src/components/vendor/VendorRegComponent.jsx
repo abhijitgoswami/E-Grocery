@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Button, Label, Col, Row} from 'reactstrap';
 import {NavLink} from 'react-router-dom';
 import { Control, Errors, LocalForm } from 'react-redux-form';
-import VendorLogin from './vendorLogin';
+import VendorLogin from './vendorLogin.jsx';
 
 const required = (val) => val && val.length;
 // const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -150,7 +150,7 @@ class VendorReg extends Component {
                             <VendorLogin vendors={this.props.vendors}/>
                         </Col>
                     </div>
-                    <NavLink to="/vendors">Vendors</NavLink>
+                    <NavLink to="/api/vendors">Vendors</NavLink>
                     <NavLink to="/vendor-profile">Vendor Profile</NavLink>
                 </div>
             </React.Fragment>

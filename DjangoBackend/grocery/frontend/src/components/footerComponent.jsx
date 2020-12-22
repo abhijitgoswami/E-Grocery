@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {NavLink} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 
 class Footer extends Component {
@@ -18,7 +18,7 @@ class Footer extends Component {
                             <h5>Contact</h5>
                             <p><NavLink to="/contact">Contact Us</NavLink></p>
                             <p><NavLink to="/help">Help and Support</NavLink></p>
-                            <p><a href="/api/vendors">Partner with us</a></p>
+                            <p><NavLink to="/vendorregistration">Partner with us</NavLink></p>
                         </Col>
 
                         <Col id="legal" md={3} sm={12} xs={12}>
@@ -44,11 +44,8 @@ class Footer extends Component {
                                 <a className='btn btn-social-icon btn-twitter mr-2' href="http://twitter.com/">
                                     <i className='fa fa-twitter'></i>
                                 </a>
-                                <a className='btn btn-social-icon btn-google mr-2' href="http://youtube.com/">
-                                    <i className='fa fa-google'></i>
-                                </a>
                                 <a className='btn btn-social-icon btn-mailto mr-2' href="mailto:">
-                                    <i className='fa fa-google-mailto'></i>
+                                    <i className="fa fa-envelope"></i>
                                 </a>
                             </div>
                         </Col>
