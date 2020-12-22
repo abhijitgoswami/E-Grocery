@@ -2,57 +2,21 @@ import * as actionTypes from './actionTypes'
 import {baseUrl} from '../Shared/baseUrl'
 import axios from 'axios'
 
-export const addVendor = (vendor) => ({
-    type: actionTypes.ADD_VENDOR,
-    payload: {
-        ...vendor,
-        id: Date.now()
-    }
-})
-
+// Get vendors.......................
 export const fetchVendors = () => (dispatch) => {
     dispatch(vendorsLoading(true))
 
     axios.get('/api/vendors')
-    .then(res => {
-        dispatch({
-            type: actionTypes.ADD_VENDORS,
-            payload: res.data
-        })
+    .then(response => {
+        dispatch(addVendors(response.data))
     })
     .catch(err => console.log(err))
-
-    // return fetch(baseUrl + '/api/vendors/')
-    //     .then(response => response.json())
-    //     .then(vendors => dispatch(addVendors(vendors)))
 }
 
-export const postVendor = (vendor) => (dispatch) => {
-    return fetch(baseUrl + 'vendors', {
-        method: 'POST',
-        body: JSON.stringify(vendor),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'same-origin'
-    })
-        .then(response => {
-            if(response.ok){
-                return response;
-            }
-            else{
-                var error = new Error('Error ' + response.status)
-                error.response = response
-                throw error
-            }
-        },
-        error => {
-            let errMsg = new Error(error.message);
-            throw errMsg
-        })
-        .then(response => response.json())
-        .then(response => dispatch(addVendor(response)));
-}
+export const addVendors = (vendors) => ({
+    type: actionTypes.ADD_VENDORS,
+    payload: vendors
+})
 
 export const vendorsLoading = () => ({
     type: actionTypes.VENDOR_LOADING
@@ -63,10 +27,47 @@ export const vendorsFailed = (errMsg) => ({
     payload: errMsg
 })
 
-export const addVendors = (vendors) => ({
-    type: actionTypes.ADD_VENDORS,
-    payload: vendors
+//Put vendor...................
+export const putVendor = (vendor) => (dispatch) => {
+    axios.put('/api/vendors/', vendor)
+    .then(response => {
+        dispatch({
+            type: actionTypes.EDIT_VENDOR,
+            payload: response.data
+        })
+    })
+    .catch(err => console.log(err))
+}
+
+// Post vendor...............................
+export const postVendor = (vendor) => (dispatch) => {
+    axios.post('/api/vendors/', vendor)
+    .then(response => {
+        dispatch(addVendor(response.data))
+    })
+    .catch(err => console.log(err))
+}
+
+export const addVendor = (vendor) => ({
+    type: actionTypes.ADD_VENDOR,
+    payload: vendor
 })
+
+// Delete vendors.............................
+export const deleteVendor = (id) => (dispatch) => {
+    axios.delete(`/api/vendors/${id}`)
+    .then(response => {
+        dispatch(delVendor(response.data))
+    })
+    .catch(err => console.log(err))
+}
+
+export const delVendor = (vendor) => ({
+    type: actionTypes.DELETE_VENDOR,
+    payload: vendor
+})
+
+
 
 //-----------------------------------------------------------------
 export const addShop = (shop) => ({

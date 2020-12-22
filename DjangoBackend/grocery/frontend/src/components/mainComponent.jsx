@@ -9,7 +9,7 @@ import Login from './customer/loginComponent.jsx';
 import Register from './customer/registrationComponent.jsx';
 import VendorReg from './vendor/VendorRegComponent.jsx';
 import ContactUs from './ContactComponent.jsx';
-import { fetchVendors, postVendor, fetchShops, postShop } from '../redux/actionCreator';
+import { fetchVendors, postVendor, fetchShops, postShop, deleteVendor } from '../redux/actionCreator';
 import VendorList from './vendor/vendorList.jsx';
 import VendorProfile from './vendor/VendorProfile.jsx';
 import EditStock from './vendor/editStock.jsx';
@@ -27,7 +27,8 @@ const mapDispatchToProps = (dispatch) => ({
     postVendor: (vendor) => dispatch(postVendor(vendor)),
     fetchVendors: () => dispatch(fetchVendors()),
     fetchShops: () => dispatch(fetchShops()),
-    postShop: (shop) => dispatch(postShop(shop))
+    postShop: (shop) => dispatch(postShop(shop)),
+    deleteVendor: (id) => dispatch(deleteVendor(id))
 })
 
 class Main extends Component {
@@ -50,7 +51,7 @@ class Main extends Component {
                     <Route path="/edit-stock" component={EditStock}/>
                     <Route path="/edit-info" component={EditInfo}/>
                     <Route path="/edit-shop" component={() => <EditShop shops={this.props.shops.shops} postShop={this.props.postShop}/>}/>
-                    <Route path="/api/vendors" component={() => <VendorList vendors={this.props.vendors.vendors}/>}/>
+                    <Route path="/api/vendors" component={() => <VendorList vendors={this.props.vendors.vendors} deleteVendor={this.props.deleteVendor}/>}/>
                     <Redirect to="/home"/>
                 </Switch>
                 <Footer/>

@@ -20,16 +20,14 @@ class VendorReg extends Component {
     
 
     handleSubmit(values){
-
-        const isNewVendor = this.props.vendors.filter((vendor) => vendor.Email === values.Email)
-        
-        if(!isNewVendor.length){
-            this.props.postVendor(values)
-            alert("Registration sucessfull!")
+        const newVendor = {
+            firstname: values.firstname,
+            lastname: values.lastname,
+            mobile: values.mobile,
+            email: values.email,
+            address: values.address
         }
-        else{
-            alert("Already registered!")
-        }
+        this.props.postVendor(newVendor)
     }
 
     render() { 
@@ -41,12 +39,12 @@ class VendorReg extends Component {
                     </div>
                     <LocalForm onSubmit={(values) => this.handleSubmit(values)}> 
                         <Row className="form-group">
-                            <Label  htmlFor="firstName" md={2}>First Name*</Label>
+                            <Label  htmlFor="firstname" md={2}>First Name*</Label>
                             <Col md={9}>
-                                <Control.text model=".firstName" id="firstName" name="firstName" placeholder="First Name" 
+                                <Control.text model=".firstname" id="firstname" name="firstname" placeholder="First Name" 
                                 className="form-control"
                                 validators={{required}}/>
-                                <Errors className="text-danger" model=".firstName" show="touched"
+                                <Errors className="text-danger" model=".firstname" show="touched"
                                 messages={{
                                     required: 'Required! '
                                 }}/>
@@ -54,12 +52,12 @@ class VendorReg extends Component {
                         </Row> 
 
                         <Row className="form-group">
-                            <Label htmlFor="lastName" md={2}>Last Name*</Label>
+                            <Label htmlFor="lastname" md={2}>Last Name*</Label>
                             <Col md={9}>
-                                <Control.text model=".lastName" id="lastName" name="lastName" placeholder="Last Name"
+                                <Control.text model=".lastname" id="lastname" name="lastname" placeholder="Last Name"
                                 className="form-control"
                                 validators={{required}}/>
-                                <Errors className="text-danger" model=".lastName" show="touched"
+                                <Errors className="text-danger" model=".lastname" show="touched"
                                 messages={{
                                     required: 'Required! '
                                 }}/>              
@@ -80,12 +78,12 @@ class VendorReg extends Component {
                         </Row>
 
                         <Row className="form-group">
-                            <Label htmlFor="Mobile" md={2}>Mobile*</Label>
+                            <Label htmlFor="mobile" md={2}>Mobile*</Label>
                             <Col md={9}>
-                                <Control.text model=".Mobile" id="Mobile" name="Mobile" placeholder="Mobile" 
+                                <Control.text model=".mobile" id="mobile" name="mobile" placeholder="mobile" 
                                 className="form-control"
                                 validators={{required, isNumber}}/>
-                                <Errors className="text-danger" model=".Mobile" show="touched"
+                                <Errors className="text-danger" model=".mobile" show="touched"
                                 messages={{
                                     required: 'Required! ',
                                     isNumber: 'Should be number'
@@ -94,12 +92,12 @@ class VendorReg extends Component {
                         </Row>
 
                         <Row className="form-group">
-                            <Label htmlFor="Email" md={2}>Email</Label>
+                            <Label htmlFor="email" md={2}>Email</Label>
                             <Col md={9}>
-                                <Control.text model=".Email" id="Email" name="Email" placeholder="Email"
+                                <Control.text model=".email" id="email" name="email" placeholder="email"
                                 className="form-control"
                                 validators={{required}}/>
-                                <Errors className="text-danger" model=".Email" show="touched"
+                                <Errors className="text-danger" model=".email" show="touched"
                                 messages={{
                                     required: 'Required! '
                                 }}/> 

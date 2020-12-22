@@ -12,7 +12,12 @@ export const Vendors = (state = {
                 ...state,
                 vendors: state.vendors.concat(vendor) 
             }
-        
+        case actionTypes.DELETE_VENDOR:
+            var id = action.payload.id
+            return{
+                ...state,
+                vendors: state.vendors.filter(vendor => vendor.id != id) 
+            }
         case actionTypes.VENDOR_LOADING:
             return{
                 ...state,
