@@ -1,0 +1,40 @@
+#header{
+  background-color: black !important;
+}
+
+#mobile{
+  float: left;
+  color: white;
+  margin-right: 30px;
+}
+
+#profile a{
+  text-decoration: none;
+}
+
+#profile{
+  float: left;
+}
+
+.navbar-brand{
+  margin-left: 10px;
+  background-color: transparent;
+}
+
+.navbar-toggler{
+  height: 55px;
+  width: 55px;
+  transition-timing-function: ease;
+  transition: 0.4s;
+  border-color: #343a40 !important;
+}
+
+/* .navbar-toggler:focus{
+  outline: none !important;
+  transform: rotate(45deg);
+} */
+
+#hamburger{
+  outline: none;
+  border: 0;
+}

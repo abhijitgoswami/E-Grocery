@@ -1,0 +1,43 @@
+footer{
+    width: 100%;
+    background-color: black;
+    margin-top: 10px;
+}
+
+#footer{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#footer h5{
+    color:  gray;
+}
+
+#footer a{
+    color: white !important;
+    text-decoration: none;
+}
+
+#company p :hover, #legal p :hover, #contact p :hover{
+    font-size: 17px;
+}
+
+#company, #contact, #legal{
+    width: 25%;
+    justify-content: center;
+}
+
+#company h5, #contact h5, #legal h5{
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+hr{
+    border: 0.5px solid gray;
+    width: 100%;
+}
+
+#copyright h5, #footer-brand span{
+    text-align: center !important;
+    color: white;
+}

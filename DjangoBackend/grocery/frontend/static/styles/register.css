@@ -1,0 +1,13 @@
+#reg-form{
+    text-align: center;
+}
+
+#reg{
+    margin-top: 20px;
+}
+
+#reg-form input{
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid black;
+}
