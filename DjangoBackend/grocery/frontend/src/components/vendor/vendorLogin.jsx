@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Button, Label, Col, Row} from 'reactstrap';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Modal, ModalBody, ModalHeader} from 'reactstrap';
 
@@ -15,9 +15,7 @@ class VendorLogin extends Component {
         super(props);
 
         this.state = {
-            login: false,
-            loggedInVendor: null,
-            redirectToDashboard: false
+            login: false
         }
 
         this.tooglelogin = this.tooglelogin.bind(this);
@@ -29,82 +27,78 @@ class VendorLogin extends Component {
     }
 
     handleSubmit(values) {
-        let username = values.username
-        const vendor = this.props.vendors.filter((vendor) => vendor.Email === username)
-        if(!vendor.length){
-            alert("Not a user!")
-        }
-        else{
-            this.setState({loggedInVendor: vendor[0]})
-            this.setState({redirectToDashboard: true})
-        }
-        
+        this.props.loginVendor(values.username, values.password)
     }
 
     render() { 
-        return (     
-            <React.Fragment>
-                <Button color="primary" onClick={this.tooglelogin}>Login</Button>
-                <Modal isOpen={this.state.login} toggle={this.tooglelogin}>
-                    <ModalHeader toggle={this.tooglelogin}>Login</ModalHeader>
-                    <ModalBody>
-                        <LocalForm onSubmit={(values) => this.handleSubmit(values)}> 
-                            <Row className="form-group">
-                                <Label htmlFor="username" md={2}>Username</Label>
-                                <Col md={10}>
-                                    <Control.text model=".username" id="username" name="username" placeholder="Username"
-                                    className="form-control" 
-                                    validators={{required}}/>
-                                    <Errors className="text-danger" model=".username" show="touched"
-                                    messages={{
-                                        required: 'Required! '
-                                    }}/>
+        if(this.props.auth.isAuthenticated){
+            return <Redirect to="/vendor-profile"/>
+        }
+        else{
+            return (     
+                <React.Fragment>
+                    <Button color="primary" onClick={this.tooglelogin}>Login</Button>
+                    <Modal isOpen={this.state.login} toggle={this.tooglelogin}>
+                        <ModalHeader toggle={this.tooglelogin}>Login</ModalHeader>
+                        <ModalBody>
+                            <LocalForm onSubmit={(values) => this.handleSubmit(values)}> 
+                                <Row className="form-group">
+                                    <Label htmlFor="username" md={2}>Username</Label>
+                                    <Col md={10}>
+                                        <Control.text model=".username" id="username" name="username" placeholder="Username"
+                                        className="form-control" 
+                                        validators={{required}}/>
+                                        <Errors className="text-danger" model=".username" show="touched"
+                                        messages={{
+                                            required: 'Required! '
+                                        }}/>
+                                    </Col>
+                                </Row> 
+    
+                                <Row className="form-group">
+                                    <Label htmlFor="password" md={2}>Password</Label>
+                                    <Col md={10}>
+                                        <Control.password model=".password" id="password" name="password" placeholder="Password"
+                                        className="form-control"
+                                        validators={{required}}/>
+                                        <Errors className="text-danger" model=".username" show="touched"
+                                        messages={{
+                                            required: 'Required! '
+                                        }}/>
+                                    </Col>
+                                </Row> 
+    
+                                <Row className="form-group">
+                                    <Col md={{size: 8, offset: 4}}>
+                                        <div className="form-check">
+                                            <Label check>
+                                                <Control.checkbox model=".agree" name="agree" className="form-check-input"/>
+                                                <strong>Remember me</strong>
+                                            </Label>
+                                        </div>
+                                    </Col>
+                                </Row>
+    
+                                <Row className="form-group">
+                                    <Col style={{textAlign: "center"}} md={{size: 4, offset:4}}>
+                                        <Button type="submit" color="primary" >Login</Button>
+                                    </Col>
+                                </Row> 
+    
+                                <Row >
+                                    <Col md={{size: 8, offset: 4}}>
+                                        <strong>Not have Account?</strong>
+                                    </Col>
+                                </Row>
+                                <Col md={{size: 4, offset: 4}} style={{textAlign:"center"}}>
+                                    <strong><NavLink className="nav-link" to="/vendorregistration" onClick={this.tooglelogin}>SIGN Up</NavLink></strong>
                                 </Col>
-                            </Row> 
-
-                            <Row className="form-group">
-                                <Label htmlFor="password" md={2}>Password</Label>
-                                <Col md={10}>
-                                    <Control.password model=".password" id="password" name="password" placeholder="Password"
-                                    className="form-control"
-                                    validators={{required}}/>
-                                    <Errors className="text-danger" model=".username" show="touched"
-                                    messages={{
-                                        required: 'Required! '
-                                    }}/>
-                                </Col>
-                            </Row> 
-
-                            <Row className="form-group">
-                                <Col md={{size: 8, offset: 4}}>
-                                    <div className="form-check">
-                                        <Label check>
-                                            <Control.checkbox model=".agree" name="agree" className="form-check-input"/>
-                                            <strong>Remember me</strong>
-                                        </Label>
-                                    </div>
-                                </Col>
-                            </Row>
-
-                            <Row className="form-group">
-                                <Col style={{textAlign: "center"}} md={{size: 4, offset:4}}>
-                                    <Button type="submit" color="primary" >Login</Button>
-                                </Col>
-                            </Row> 
-
-                            <Row >
-                                <Col md={{size: 8, offset: 4}}>
-                                    <strong>Not have Account?</strong>
-                                </Col>
-                            </Row>
-                            <Col md={{size: 4, offset: 4}} style={{textAlign:"center"}}>
-                                <strong><NavLink className="nav-link" to="/vendorregistration" onClick={this.tooglelogin}>SIGN Up</NavLink></strong>
-                            </Col>
-                        </LocalForm>
-                    </ModalBody>      
-                </Modal>
-            </React.Fragment>
-        );
+                            </LocalForm>
+                        </ModalBody>      
+                    </Modal>
+                </React.Fragment>
+            );
+        }
     }
 }
  

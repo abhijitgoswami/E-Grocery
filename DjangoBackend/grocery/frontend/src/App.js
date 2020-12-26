@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
 import { HashRouter } from 'react-router-dom';
-import Header from './components/headerComponent.jsx';
-import Footer from './components/footerComponent.jsx';
-import VendorList from './components/vendor/vendorList.jsx';
 import Main from './components/mainComponent.jsx'
 import {Provider} from 'react-redux';
 import { ConfigureStore } from '../src/redux/configureStore'
+import { transitions, positions, Provider as AlertProvider, types } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
 
 const store = ConfigureStore()
+
+const options = {
+  position: positions.MIDDLE,
+  timeout:2500,
+  offset: '10px',
+  transition: transitions.SCALE,
+  type: types.SUCCESS
+}
 
 class App extends Component {
   render() { 
     return (  
       <Provider store={store}>
-        <HashRouter>
-          <Main/>
-        </HashRouter>
+        <AlertProvider template={AlertTemplate} {...options}>
+          <HashRouter>
+            <Main/>
+          </HashRouter>
+        </AlertProvider>
       </Provider>
     );
   }

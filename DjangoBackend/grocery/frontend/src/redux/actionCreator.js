@@ -1,129 +1,241 @@
 import * as actionTypes from './actionTypes'
-import {baseUrl} from '../Shared/baseUrl'
 import axios from 'axios'
 
-// Get vendors.......................
-export const fetchVendors = () => (dispatch) => {
-    dispatch(vendorsLoading(true))
+//Register vendor.........
+export const registerVendor = (vendor) => (dispatch) => {
+    
+    //Headers............
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
 
-    axios.get('/api/vendors')
-    .then(response => {
-        dispatch(addVendors(response.data))
-    })
-    .catch(err => console.log(err))
-}
+    //request body........
+    const body = JSON.stringify(vendor)
 
-export const addVendors = (vendors) => ({
-    type: actionTypes.ADD_VENDORS,
-    payload: vendors
-})
-
-export const vendorsLoading = () => ({
-    type: actionTypes.VENDOR_LOADING
-})
-
-export const vendorsFailed = (errMsg) => ({
-    type: actionTypes.VENDOR_FAILED,
-    payload: errMsg
-})
-
-//Put vendor...................
-export const putVendor = (vendor) => (dispatch) => {
-    axios.put('/api/vendors/', vendor)
+    axios.post('/api/auth/vendorregistration', body, config)
     .then(response => {
         dispatch({
-            type: actionTypes.EDIT_VENDOR,
+            type: actionTypes.VENDOR_REGISTER,
             payload: response.data
         })
     })
-    .catch(err => console.log(err))
-}
-
-// Post vendor...............................
-export const postVendor = (vendor) => (dispatch) => {
-    axios.post('/api/vendors/', vendor)
-    .then(response => {
-        dispatch(addVendor(response.data))
+    .catch(err => {
+        dispatch(returnErrors(err.response.data, err.response.status))
+        dispatch({
+            type: actionTypes.VENDOR_REGISTER_FAIL
+        })
     })
-    .catch(err => console.log(err))
 }
 
-export const addVendor = (vendor) => ({
-    type: actionTypes.ADD_VENDOR,
-    payload: vendor
-})
 
-// Delete vendors.............................
-export const deleteVendor = (id) => (dispatch) => {
-    axios.delete(`/api/vendors/${id}`)
-    .then(response => {
-        dispatch(delVendor(response.data))
+//login of vendor.................................
+export const loginVendor = (username, password) => (dispatch) => {
+    //Headers............
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    //request body........
+    const body = JSON.stringify({
+        username: username, password: password
     })
-    .catch(err => console.log(err))
+
+    axios.post('/api/auth/vendorlogin', body, config)
+    .then(response => {
+        dispatch(createMessage({
+            loginsuccessfull: 'Login Successfull!',
+        }))
+        dispatch({
+            type: actionTypes.VENDOR_LOGIN,
+            payload: response.data
+        })
+    })
+    .catch(err => {
+        dispatch(returnErrors(err.response.data, err.response.status))
+        dispatch({
+            type: actionTypes.VENDOR_LOGIN_FAIL
+        })
+    })
 }
 
-export const delVendor = (vendor) => ({
-    type: actionTypes.DELETE_VENDOR,
-    payload: vendor
-})
+//check token and load user.........................................
+export const loadVendor = () => (dispatch, getstate) => {
+    //vendor loading.....
+    dispatch({
+        type: actionTypes.VENDOR_LOADING
+    })
+    //Get token from state.........
+    const token = getstate().auth.token
+
+    //Headers............
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    //If token added to header........
+    if(token){
+        config.headers['Authorization'] = `Token ${token}`
+    }
+
+    axios.get('/api/auth/vendor', config)
+    .then(response => {
+        dispatch({
+            type: actionTypes.VENDOR_LOADED,
+            payload: response.data
+        })
+    })
+    .catch(err => {
+        //dispatch(returnErrors(err.response.data, err.response.status))
+        dispatch({
+            type: actionTypes.AUTH_ERR
+        })
+    })
+}
+
+//Logout of vendor...................................
+export const logoutVendor = () => (dispatch, getstate) => {
+    //Get token from state.........
+    const token = getstate().auth.token
+
+    //Headers............
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    //If token added to header........
+    if(token){
+        config.headers['Authorization'] = `Token ${token}`
+    }
+
+    axios.post('/api/auth/logout', null, config)
+    .then(response => {
+        console.log(response);
+        dispatch(createMessage({
+            logoutsuccessfull: 'Logout Successfull!',
+        }))
+        dispatch({
+            type: actionTypes.VENDOR_LOGOUT
+        })
+    })
+    .catch(err => {console.log(err);})
+}
+
+// Delete vendor(only by admin).............................
+// export const deleteVendor = (id) => (dispatch) => {
+//     axios.delete(`/api/vendors/${id}`)
+//     .then(response => {
+//         dispatch(delVendor(response.data))
+//     })
+//     .catch(err => console.log(err))
+// }
+
+// export const delVendor = (vendor) => ({
+//     type: actionTypes.DELETE_VENDOR,
+//     payload: vendor
+// })
 
 
 
 //-----------------------------------------------------------------
+
+//Get shops............................
+export const fetchShops = () => (dispatch) => {
+    axios.get('/api/shops')
+    .then(response => dispatch(addShops(response.data)))
+    .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
+}
+export const addShops = (shops) => ({
+    type: actionTypes.ADD_SHOPS,
+    payload: shops
+})
+
+//Edit shop............................
+export const putShop = (id, shop) => (dispatch) => {
+    //Headers............
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    //request body........
+    const body = JSON.stringify(shop)
+    axios.put(`/api/shops/${id}/`, body, config)
+    .then(response => {
+        dispatch(createMessage({
+            shopedited: 'Shop Edited Successfully!',
+        }))
+        dispatch(editShop(response.data))
+    })
+    .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
+}
+export const editShop = () => ({
+    type: actionTypes.EDIT_SHOP
+})
+
+//Add shop............................
+export const postShop = (shop) => (dispatch) => {
+    //Headers............
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    //request body........
+    const body = JSON.stringify(shop)
+
+    axios.post('/api/shops/', body, config)
+    .then(response => {
+        dispatch(createMessage({
+            shopadded: 'Shop added!',
+        }))
+        dispatch(addShop(response.data))
+    })
+    .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
+}
 export const addShop = (shop) => ({
     type: actionTypes.ADD_SHOP,
     payload: shop
 })
 
-export const postShop = (shop) => (dispatch) => {
-    let newShop = {
-        ...shop,
-        id: Date.now()
-    }
-    return fetch(baseUrl + 'shops', {
-        method: 'POST',
-        body: JSON.stringify(newShop),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'same-origin'
+//delete shop..............
+export const deleteShop = (id) => (dispatch) => {
+    axios.delete(`/api/shops/${id}/`)
+    .then(response => {
+        dispatch(createMessage({
+            shopdeleted: 'Shop deleted!',
+        }))
+        dispatch(delShop(id))
     })
-        .then(response => {
-            if(response.ok){
-                return response;
-            }
-            else{
-                var error = new Error('Error ' + response.status)
-                error.response = response
-                throw error
-            }
-        },
-        error => {
-            let errMsg = new Error(error.message);
-            throw errMsg
-        })
-        .then(response => response.json())
-        .then(response => dispatch(addShop(response)));
+    .catch(err => console.log(err))
+}
+export const delShop = (id) => ({
+    type: actionTypes.DELETE_SHOP,
+    payload: id
+})
+
+
+//Create success message................
+export const createMessage = (msg) => {
+    return{
+        type: actionTypes.CREATE_SUCCESS_MSG,
+        payload: msg
+    }
 }
 
-export const fetchShops = () => (dispatch) => {
-    dispatch(shopsLoading(true))
-
-    return fetch(baseUrl + 'shops')
-        .then(response => response.json())
-        .then(shops => dispatch(addShops(shops)))
+//Return Errors.............
+export const returnErrors = (msg, status) => {
+    return{
+        type: actionTypes.GET_ERRORS,
+        payload: {msg, status}
+    }
 }
-
-export const shopsLoading = () => ({
-    type: actionTypes.SHOP_LOADING
-})
-
-export const shopsFailed = (errMsg) => ({
-    type: actionTypes.SHOP_FAILED,
-    payload: errMsg
-})
-
-export const addShops = (shops) => ({
-    type: actionTypes.ADD_SHOPS,
-    payload: shops
-})

@@ -17,17 +17,17 @@ class VendorReg extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    
-
     handleSubmit(values){
         const newVendor = {
             firstname: values.firstname,
             lastname: values.lastname,
-            mobile: values.mobile,
             email: values.email,
-            address: values.address
+            mobile: values.mobile,
+            address: values.address,
+            username: values.email,
+            password: values.password
         }
-        this.props.postVendor(newVendor)
+        this.props.registerVendor(newVendor)
     }
 
     render() { 
@@ -145,11 +145,9 @@ class VendorReg extends Component {
                         </Row>
 
                         <Col md={{size: 4, offset: 4}} style={{textAlign:"center"}}>
-                            <VendorLogin vendors={this.props.vendors}/>
+                            <VendorLogin vendors={this.props.vendors} loginVendor={this.props.loginVendor} auth={this.props.auth}/>
                         </Col>
                     </div>
-                    <NavLink to="/api/vendors">Vendors</NavLink>
-                    <NavLink to="/vendor-profile">Vendor Profile</NavLink>
                 </div>
             </React.Fragment>
         );

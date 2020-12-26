@@ -18,6 +18,15 @@ class Header extends Component {
     }
 
     render() { 
+        const logout = () => {
+            return(
+                <NavItem style={{textAlign:"center"}} className="col-md-2">
+                    <button className="btn btn-primary btn-md" to="/contact">
+                        <span class="fa fa-sign-out" aria-hidden="true">Logout</span>
+                    </button>
+                </NavItem>
+            )
+        }
         return (  
             <React.Fragment>
                 <header>
@@ -32,26 +41,31 @@ class Header extends Component {
                             
                             <Collapse isOpen={this.state.isNavOpen} navbar>
                                 <Nav className="ml-auto" >                               
-                                    <NavItem style={{textAlign:"center"}} className="col-md-3">
+                                    <NavItem style={{textAlign:"center"}} className="col-md-2">
                                         <NavLink className="nav-link" to="/home">
                                             <span className="fa fa-home fa-md">Home</span>
                                         </NavLink>
                                     </NavItem>
-                                    <NavItem style={{textAlign:"center"}} className="col-md-3">
+                                    <NavItem style={{textAlign:"center"}} className="col-md-2">
                                         <NavLink className="nav-link" to="/shop">
                                             <span className="fas fa-store-alt fa-md">Shop</span>
                                         </NavLink>
                                     </NavItem>
-                                    <NavItem style={{textAlign:"center"}} className="col-md-3">
+                                    <NavItem style={{textAlign:"center"}} className="col-md-2">
                                         <NavLink className="nav-link" to="/about">
                                             <span className="fa fa-info fa-md">About</span>
                                         </NavLink>
                                     </NavItem>
-                                    <NavItem style={{textAlign:"center"}} className="col-md-3">
+                                    <NavItem style={{textAlign:"center"}} className="col-md-2">
                                         <NavLink className="nav-link" to="/contact">
                                             <span className="fa fa-address-book fa-md">Contact</span>
                                         </NavLink>
-                                    </NavItem>                                
+                                    </NavItem> 
+                                    {this.props.auth.isAuthenticated?<NavItem style={{textAlign:"center"}} className="col-md-2">
+                                    <button className="btn btn-primary btn-md" onClick={() => this.props.logoutVendor()}>
+                                        <span className="fa fa-sign-out" aria-hidden="true">Logout</span>
+                                    </button>
+                                </NavItem>:null}                              
                                 </Nav>
                             </Collapse>                     
                         </div>

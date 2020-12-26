@@ -1,43 +1,28 @@
 import * as actionTypes from './actionTypes'
 
 export const Shops = (state = {
-    isLoading: true,
-    errMsg: null,
     shops: []
 }, action) => {
     switch (action.type){
-        case actionTypes.ADD_SHOP:
-            return{
-                ...state,
-                isLoading: true,
-                errMsg: null,
-                shops: state.shops.concat(action.payload)
-            }
-
-        case actionTypes.SHOP_LOADING:
-            return{
-                ...state,
-                isLoading: true,
-                errMsg: null,
-                shops: []
-            }
-
-        case actionTypes.SHOP_FAILED:
-            return{
-                ...state,
-                isLoading: false,
-                errMsg: action.payload,
-                shops: []
-            }
-
         case actionTypes.ADD_SHOPS:
             return{
                 ...state,
-                isLoading: false,
-                errMsg: null,
                 shops: action.payload
             }
-
+        case actionTypes.EDIT_SHOP:
+            return{
+                ...state
+            }
+        case actionTypes.ADD_SHOP:
+            return{
+                ...state,
+                shops: state.shops.concat(action.payload)
+            }
+        case actionTypes.DELETE_SHOP:
+            return{
+                ...state,
+                shops: state.shops.filter(shop => shop.id != action.payload)
+            }
         default:
             return state
     }

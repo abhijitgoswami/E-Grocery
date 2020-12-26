@@ -4,8 +4,14 @@ from .serializers import VendorSerializer
 
 #lead viewset
 class VendorViewSet(viewsets.ModelViewSet):
-    queryset = Vendor.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-    ]
+    # permission_classes = [
+    #     permissions.IsAuthenticated
+    # ]
+
     serializer_class = VendorSerializer
+
+    def get_queryset(self):
+        return self.request.user.vendors.all()
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
