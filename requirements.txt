@@ -1,8 +1,8 @@
 node modules:-
 ----------------
 "devDependencies": {
-    	npm install -d @babel/core @babel/preset-env @babel/preset-react babel-loader babel-plugin-transform-class-properties 
-	npm install -d webpack webpack-cli
+    	npm install -D @babel/core @babel/preset-env @babel/preset-react babel-loader babel-plugin-transform-class-properties 
+	npm install -D webpack webpack-cli
   },
   "dependencies": {
     	npm install --save axios bootstrap bootstrap-social font-awesome
