@@ -1,0 +1,12 @@
+node modules:-
+----------------
+"devDependencies": {
+    	npm install -d @babel/core @babel/preset-env @babel/preset-react babel-loader babel-plugin-transform-class-properties 
+	npm install -d webpack webpack-cli
+  },
+  "dependencies": {
+    	npm install --save axios bootstrap bootstrap-social font-awesome
+    	npm install --save react react-alert react-alert-template-basic react-bootstrap react-dom
+    	npm install --save react-redux react-redux-form react-router-dom reactstrap
+    	npm install --save redux redux-devtools-extension redux-logger redux-thunk
+  }
