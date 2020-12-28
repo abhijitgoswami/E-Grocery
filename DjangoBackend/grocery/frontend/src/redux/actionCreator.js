@@ -147,8 +147,23 @@ export const logoutVendor = () => (dispatch, getstate) => {
 //-----------------------------------------------------------------
 
 //Get shops............................
-export const fetchShops = () => (dispatch) => {
-    axios.get('/api/shops')
+export const fetchShops = () => (dispatch, getstate) => {
+    //Get token from state.........
+    const token = getstate().auth.token
+
+    //Headers............
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    //If token added to header........
+    if(token){
+        config.headers['Authorization'] = `Token ${token}`
+    }
+
+    axios.get('/api/shops', config)
     .then(response => dispatch(addShops(response.data)))
     .catch(err => dispatch(returnErrors(err.response.data, err.response.status)))
 }
@@ -182,14 +197,21 @@ export const editShop = () => ({
 })
 
 //Add shop............................
-export const postShop = (shop) => (dispatch) => {
-    //Headers............
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
+export const postShop = (shop) => (dispatch, getstate) => {
+     //Get token from state.........
+     const token = getstate().auth.token
 
+     //Headers............
+     const config = {
+         headers: {
+             'Content-Type': 'application/json'
+         }
+     }
+ 
+     //If token added to header........
+     if(token){
+         config.headers['Authorization'] = `Token ${token}`
+     }
     //request body........
     const body = JSON.stringify(shop)
 
@@ -208,8 +230,23 @@ export const addShop = (shop) => ({
 })
 
 //delete shop..............
-export const deleteShop = (id) => (dispatch) => {
-    axios.delete(`/api/shops/${id}/`)
+export const deleteShop = (id) => (dispatch, getstate) => {
+    //Get token from state.........
+    const token = getstate().auth.token
+
+    //Headers............
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    //If token added to header........
+    if(token){
+        config.headers['Authorization'] = `Token ${token}`
+    }
+
+    axios.delete(`/api/shops/${id}/`, config)
     .then(response => {
         dispatch(createMessage({
             shopdeleted: 'Shop deleted!',
