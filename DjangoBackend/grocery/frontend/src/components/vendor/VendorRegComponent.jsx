@@ -24,7 +24,6 @@ class VendorReg extends Component {
             email: values.email,
             mobile: values.mobile,
             address: values.address,
-            username: values.email,
             password: values.password
         }
         this.props.registerVendor(newVendor)

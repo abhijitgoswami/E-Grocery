@@ -14,11 +14,12 @@ export const registerVendor = (vendor) => (dispatch) => {
     //request body........
     const body = JSON.stringify(vendor)
 
-    axios.post('/api/auth/vendorregistration', body, config)
+    axios.post('/api/vendors/', body, config)
     .then(response => {
+        console.log(response);
         dispatch({
             type: actionTypes.VENDOR_REGISTER,
-            payload: response.data
+            payload: response.data.messge
         })
     })
     .catch(err => {

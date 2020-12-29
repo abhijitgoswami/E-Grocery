@@ -17,11 +17,11 @@ const VendorProfile = (props) => {
                     </Card>
                     
                     <Card>
-                        <CardTitle >{props.auth.vendor.username}</CardTitle>
+                        <CardTitle >Usernmae</CardTitle>
                         <CardBody>
                             <p>Address: Rajosmita Cottage, 10/A K P Banerjee lane, konnagar</p>
                             <p>Mobile: 8409279455</p>
-                            <p>Email: {props.auth.vendor.email}</p>
+                            <p>Email: email</p>
                             <p>Shops: shop1, shop2, shop3</p>
                         </CardBody>
                     </Card>
